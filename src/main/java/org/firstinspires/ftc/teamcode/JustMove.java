@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,8 +12,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@TeleOp(name="something offensive", group="Iterative Opmode")
-public class JustMove extends OpMode {
+@Autonomous(name="something offensive", group="Iterative Opmode")
+public class JustMove extends BaseAuto{
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -28,26 +29,19 @@ public class JustMove extends OpMode {
     private static final double WHEEL_CIRCUMFERENCE= 3.75 * Math.PI;
     private static final double TICS_PER_INCH = TICS_PER_REV / WHEEL_CIRCUMFERENCE;
     private static final double INCHES_PER_TIC = WHEEL_CIRCUMFERENCE / TICS_PER_REV;
-    private DcMotor left_drive= null;
-    private DcMotor right_drive= null;
+
+    enum Position {
+        LEFT, RIGHT, NOTHING
+    }
+
+    Position position = Position.NOTHING;
+
     private boolean positionIs1 = false;
     private boolean positionIs2 = false;
     private boolean positionIs3 = false;
 
     public void init() {
-        left_drive = hardwareMap.get(DcMotor.class, "left_drive");
-        right_drive = hardwareMap.get(DcMotor.class, "right_drive");
-
-        left_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        right_drive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        left_drive.setTargetPosition((int)INCHES_PER_TIC);
-        right_drive.setTargetPosition((int) INCHES_PER_TIC);
-        left_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        right_drive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        left_drive.setPower(0.5);
-        right_drive.setPower(0.5);
-
+        super.init();
         initVuforia();
         initTfod();
         if (tfod != null) {
@@ -57,57 +51,47 @@ public class JustMove extends OpMode {
     }
     public void loop(){
 
-            List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
-            if (updatedRecognitions != null) {
-                telemetry.addData("# Object Detected", updatedRecognitions.size());
-                int i = 0;
-                int counter = 0;
-                double center = 0;
-                for (Recognition recognition : updatedRecognitions) {
-                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+        List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
+        if (updatedRecognitions != null) {
+            telemetry.addData("# Object Detected", updatedRecognitions.size());
+            int i = 0;
+            int counter = 0;
+            double center = 0;
+            for (Recognition recognition : updatedRecognitions) {
+                telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
 
-                    /*telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                            recognition.getLeft(), recognition.getTop());
-                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                            recognition.getRight(), recognition.getBottom()); */
+                /*telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                        recognition.getLeft(), recognition.getTop());
+                telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                        recognition.getRight(), recognition.getBottom()); */
 
-                    center = ( ( recognition.getLeft() + recognition.getRight() ) /2 );
+                center = ( ( recognition.getLeft() + recognition.getRight() ) /2 );
 
-                    if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")) {
+                if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")) {
 
-                        if(center<=320){
-                            telemetry.addLine("Position: 2");
-                            positionIs2 = true;
-                        }
-                        else if(center>320){
-                            telemetry.addLine("Position: 3");
-                            positionIs3 = true;
-                        }
-                        else{
-                            telemetry.addLine("Position: 1");
-                            positionIs1 = true;
-                        }
+                    if(center<=320){
+                        telemetry.addLine("Position: 1");
+                        positionIs1 = true;
+                        position = Position.LEFT;
                     }
+                    else if(center>320){
+                        telemetry.addLine("Position: 2");
+                        positionIs2 = true;
+                        position = Position.RIGHT;
+                    }
+
                 }
-
-
-            }
-            if (!positionIs2 && !positionIs3) {
-                telemetry.addLine("Position: 1");
-                positionIs1 = true;
             }
         }
+        if (position == Position.NOTHING) {
+            telemetry.addLine("Position: 3");
+            positionIs3 = true;
+            position = Position.NOTHING;
+        }
+    }
 
-    public int getPosition(){
-        if(positionIs1){
-            return 1;
-        }
-        else if(positionIs2){
-            return 2;
-        }
-        else{
-            return 3;
-        }
+    public Position getPosition(){
+        return position;
     }
     private void initVuforia(){
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();

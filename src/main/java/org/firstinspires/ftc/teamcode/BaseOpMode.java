@@ -14,10 +14,11 @@ public class BaseOpMode extends OpMode {
     protected DcMotor rightSpool;
     protected DcMotor spinner;
     protected DcMotor intake;
+    protected Servo leftBox;
+
+    protected Servo rightBox;
     protected Servo leftGrabby;
     protected Servo rightGrabby;
-    protected Servo leftBox;
-    protected Servo rightBox;
     protected final double SCOOP_DROP = 0.1;
     protected final double SCOOP_UP = 0.5;
     protected final double SCOOP_FORWARD = 0.9;
@@ -25,6 +26,10 @@ public class BaseOpMode extends OpMode {
     protected final double SCOOP2_UP = 0.5;
     protected final double SCOOP2_FORWARD = 0.1;
 
+    protected final double GRABBY_LEFT_TO_UP = 0.5;
+    protected final double GRABBY_LEFT_TO_DOWN = 1.0;
+    protected final double GRABBY_RIGHT_TO_UP = 0.5;
+    protected final double GRABBY_RIGHT_TO_DOWN = 0.0;
 
     @Override
     public void init() {
@@ -36,6 +41,8 @@ public class BaseOpMode extends OpMode {
         rightSpool = hardwareMap.dcMotor.get("rightSpool");
         spinner = hardwareMap.dcMotor.get("spinner");
         intake = hardwareMap.dcMotor.get("intake");
+        leftBox = hardwareMap.servo.get("leftBox");
+        rightBox = hardwareMap.servo.get("rightBox");
         leftGrabby = hardwareMap.servo.get("leftGrabby");
         rightGrabby = hardwareMap.servo.get("rightGrabby");
 

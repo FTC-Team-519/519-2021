@@ -47,8 +47,13 @@ public class MainTeleop extends BaseTeleOp{
             intake.setPower(0.0);
         }
 
-        if(driver.left_trigger> 0){
-
+        if(driver.left_trigger > 0){
+            leftGrabby.setPosition(GRABBY_LEFT_TO_UP);
+            rightGrabby.setPosition(GRABBY_RIGHT_TO_UP);
+        }
+        else if(driver.right_trigger > 0){
+            leftGrabby.setPosition(GRABBY_LEFT_TO_DOWN);
+            rightGrabby.setPosition(GRABBY_RIGHT_TO_DOWN);
         }
 
         if (gunner.right_bumper) {
@@ -72,16 +77,16 @@ public class MainTeleop extends BaseTeleOp{
         }
 
         if(gunner.x) {
-            leftGrabby.setPosition(SCOOP_UP);
-            rightGrabby.setPosition(SCOOP2_UP);
+            leftBox.setPosition(SCOOP_UP);
+            rightBox.setPosition(SCOOP2_UP);
         }
         else if(gunner.y){
-            leftGrabby.setPosition(SCOOP_DROP);
-            rightGrabby.setPosition(SCOOP2_DROP);
+            leftBox.setPosition(SCOOP_DROP);
+            rightBox.setPosition(SCOOP2_DROP);
         }
         else if(gunner.a){
-            leftGrabby.setPosition(SCOOP_FORWARD);
-            rightGrabby.setPosition(SCOOP2_FORWARD);
+            leftBox.setPosition(SCOOP_FORWARD);
+            rightBox.setPosition(SCOOP2_FORWARD);
         }
 
     }
