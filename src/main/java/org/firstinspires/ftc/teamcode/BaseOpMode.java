@@ -14,9 +14,10 @@ public class BaseOpMode extends OpMode {
     protected DcMotor rightSpool;
     protected DcMotor spinner;
     protected DcMotor intake;
-    protected Servo leftBox;
 
+    protected Servo leftBox;
     protected Servo rightBox;
+
     protected Servo leftGrabby;
     protected Servo rightGrabby;
     protected final double SCOOP_DROP = 0.1;
@@ -30,6 +31,12 @@ public class BaseOpMode extends OpMode {
     protected final double GRABBY_LEFT_TO_DOWN = 1.0;
     protected final double GRABBY_RIGHT_TO_UP = 0.5;
     protected final double GRABBY_RIGHT_TO_DOWN = 0.0;
+
+    protected final int SPOOL_ENCODER_BOTTOM_POSITION = 1500;
+
+    enum ScoopPosition {
+        UP, FORWARD, DROP
+    }
 
     @Override
     public void init() {
@@ -64,11 +71,33 @@ public class BaseOpMode extends OpMode {
         spinner.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         intake.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
 
     }
 
     @Override
     public void loop() {
 
+    }
+
+    public void setScoopPosition(ScoopPosition position) {
+        switch (position) {
+            case UP:
+                leftBox.setPosition(SCOOP_UP);
+                rightBox.setPosition(SCOOP2_UP);
+                break;
+            case FORWARD:
+                leftBox.setPosition(SCOOP_FORWARD);
+                rightBox.setPosition(SCOOP2_FORWARD);
+                break;
+            case DROP:
+                leftBox.setPosition(SCOOP_DROP);
+                rightBox.setPosition(SCOOP2_DROP);
+                break;
+        }
     }
 }

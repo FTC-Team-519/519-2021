@@ -37,7 +37,7 @@ public class BaseAuto extends BaseOpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
-
+        setScoopPosition(ScoopPosition.UP);
     }
 
     @Override

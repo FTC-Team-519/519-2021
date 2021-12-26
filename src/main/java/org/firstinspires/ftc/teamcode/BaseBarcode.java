@@ -12,8 +12,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 
 import java.util.List;
 
-@Autonomous(name="something offensive", group="Iterative Opmode")
-public class JustMove extends BaseAuto{
+public class BaseBarcode extends BaseAuto {
     private static final String TFOD_MODEL_ASSET = "FreightFrenzy_BCDM.tflite";
     private static final String[] LABELS = {
             "Ball",
@@ -26,11 +25,11 @@ public class JustMove extends BaseAuto{
     private VuforiaLocalizer vuforia;
     private TFObjectDetector tfod;
     private static final double TICS_PER_REV = 1425.1;
-    private static final double WHEEL_CIRCUMFERENCE= 3.75 * Math.PI;
+    private static final double WHEEL_CIRCUMFERENCE = 3.75 * Math.PI;
     private static final double TICS_PER_INCH = TICS_PER_REV / WHEEL_CIRCUMFERENCE;
     private static final double INCHES_PER_TIC = WHEEL_CIRCUMFERENCE / TICS_PER_REV;
 
-    enum Position {
+    protected enum Position {
         LEFT, RIGHT, NOTHING
     }
 
@@ -40,6 +39,7 @@ public class JustMove extends BaseAuto{
     private boolean positionIs2 = false;
     private boolean positionIs3 = false;
 
+    @Override
     public void init() {
         super.init();
         initVuforia();
@@ -48,8 +48,6 @@ public class JustMove extends BaseAuto{
             tfod.activate();
             tfod.setZoom(1.25, 16.0 / 9.0);
         }
-    }
-    public void loop(){
 
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {
@@ -65,16 +63,15 @@ public class JustMove extends BaseAuto{
                 telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                         recognition.getRight(), recognition.getBottom()); */
 
-                center = ( ( recognition.getLeft() + recognition.getRight() ) /2 );
+                center = ((recognition.getLeft() + recognition.getRight()) / 2);
 
                 if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")) {
 
-                    if(center<=320){
+                    if (center <= 320) {
                         telemetry.addLine("Position: 1");
                         positionIs1 = true;
                         position = Position.LEFT;
-                    }
-                    else if(center>320){
+                    } else if (center > 320) {
                         telemetry.addLine("Position: 2");
                         positionIs2 = true;
                         position = Position.RIGHT;
@@ -82,23 +79,24 @@ public class JustMove extends BaseAuto{
 
                 }
             }
-        }
-        if (position == Position.NOTHING) {
+        } else {
             telemetry.addLine("Position: 3");
             positionIs3 = true;
             position = Position.NOTHING;
         }
     }
 
-    public Position getPosition(){
+    public Position getPosition() {
         return position;
     }
-    private void initVuforia(){
+
+    private void initVuforia() {
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
+
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());

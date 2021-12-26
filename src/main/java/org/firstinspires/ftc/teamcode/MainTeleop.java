@@ -77,17 +77,17 @@ public class MainTeleop extends BaseTeleOp{
         }
 
         if(gunner.x) {
-            leftBox.setPosition(SCOOP_UP);
-            rightBox.setPosition(SCOOP2_UP);
+            setScoopPosition(ScoopPosition.UP);
         }
         else if(gunner.y){
-            leftBox.setPosition(SCOOP_DROP);
-            rightBox.setPosition(SCOOP2_DROP);
+            setScoopPosition(ScoopPosition.DROP);
         }
         else if(gunner.a){
-            leftBox.setPosition(SCOOP_FORWARD);
-            rightBox.setPosition(SCOOP2_FORWARD);
+            setScoopPosition(ScoopPosition.FORWARD);
         }
+
+        telemetry.addData("Spool Left: ", leftSpool.getCurrentPosition());
+        telemetry.addData("Spool Right: ", rightSpool.getCurrentPosition());
 
     }
 }
