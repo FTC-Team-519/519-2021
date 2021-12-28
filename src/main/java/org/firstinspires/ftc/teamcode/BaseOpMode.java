@@ -23,6 +23,11 @@ public class BaseOpMode extends OpMode {
     protected final double SCOOP_DROP = 0.1;
     protected final double SCOOP_UP = 0.5;
     protected final double SCOOP_FORWARD = 0.9;
+
+    // Shallower Drop
+    protected final double SCOOP_DROP_2 = 0.15;
+    protected final double SCOOP2_DROP_2 = 0.85;
+
     protected final double SCOOP2_DROP = 0.9;
     protected final double SCOOP2_UP = 0.5;
     protected final double SCOOP2_FORWARD = 0.1;
@@ -32,10 +37,16 @@ public class BaseOpMode extends OpMode {
     protected final double GRABBY_RIGHT_TO_UP = 0.5;
     protected final double GRABBY_RIGHT_TO_DOWN = 0.0;
 
-    protected final int SPOOL_ENCODER_BOTTOM_POSITION = 1500;
+    protected final int SPOOL_ENCODER_BOTTOM_POSITION = 2000;
+
+    protected final int SPOOL_ENCODER_TOP_POSITION = 4200;
+    protected final int SPOOL_ENCODER_MIDDLE_POSITION = 2800;
+    // 1100 maybe
+    // 3400 for second height, at DROP (not DROP 2)
+    // 4200
 
     enum ScoopPosition {
-        UP, FORWARD, DROP
+        UP, FORWARD, DROP, DROP2
     }
 
     @Override
@@ -97,6 +108,10 @@ public class BaseOpMode extends OpMode {
             case DROP:
                 leftBox.setPosition(SCOOP_DROP);
                 rightBox.setPosition(SCOOP2_DROP);
+                break;
+            case DROP2:
+                leftBox.setPosition(SCOOP_DROP_2);
+                rightBox.setPosition(SCOOP2_DROP_2);
                 break;
         }
     }

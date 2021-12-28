@@ -49,6 +49,12 @@ public class BaseBarcode extends BaseAuto {
             tfod.setZoom(1.25, 16.0 / 9.0);
         }
 
+
+    }
+
+    @Override
+    public void init_loop() {
+        super.init_loop();
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {
             telemetry.addData("# Object Detected", updatedRecognitions.size());
@@ -67,23 +73,24 @@ public class BaseBarcode extends BaseAuto {
 
                 if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")) {
 
-                    if (center <= 320) {
-                        telemetry.addLine("Position: 1");
-                        positionIs1 = true;
-                        position = Position.LEFT;
-                    } else if (center > 320) {
-                        telemetry.addLine("Position: 2");
-                        positionIs2 = true;
-                        position = Position.RIGHT;
-                    }
+                if (center <= 320) {
+                    telemetry.addLine("Position: 1");
+                    positionIs1 = true;
+                    position = Position.LEFT;
+                } else if (center > 320) {
+                    telemetry.addLine("Position: 2");
+                    positionIs2 = true;
+                    position = Position.RIGHT;
+                }
 
                 }
             }
-        } else {
-            telemetry.addLine("Position: 3");
-            positionIs3 = true;
-            position = Position.NOTHING;
-        }
+        }// else {
+//            telemetry.addLine("Position: 3");
+//            positionIs3 = true;
+//            position = Position.NOTHING;
+//        }
+        telemetry.addData("Postion: ", position.toString());
     }
 
     public Position getPosition() {

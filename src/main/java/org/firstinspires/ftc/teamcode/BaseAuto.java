@@ -13,9 +13,9 @@ public class BaseAuto extends BaseOpMode {
     protected Orientation angles;
 
     public static final double TICKS_PER_REVOLUTION = 384.5;
-    public static final double WHEEL_DIAMETER = 4.72441;
+    public static final double WHEEL_DIAMETER = 3.78; // 4.72441 WHERE DID THIS NUMBER COME FROM?
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
-    public static final double TICKS_PER_INCH = TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE;
+    public static final int TICKS_PER_INCH = (int)(TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);
     public static final double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
     public ElapsedTime timer = new ElapsedTime();
 
@@ -37,12 +37,15 @@ public class BaseAuto extends BaseOpMode {
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         imu.initialize(parameters);
+
         setScoopPosition(ScoopPosition.UP);
     }
 
     @Override
     public void start() {
         super.start();
+        timer.reset();
+        timer.startTime();
     }
 
     @Override
