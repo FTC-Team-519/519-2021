@@ -1,21 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-@Autonomous(name = "RedRightBarcode", group = "main", preselectTeleOp = "cheep cheep beach")
-public class RedRightBarcode extends BaseBarcode{
+@Autonomous(name = "RedLeftBarcode", group = "main", preselectTeleOp = "cheep cheep beach")
 
-    // For the purpose of testing the spool encoders as of right now.
-    // NOT an actual autonomous routine
+public class RedLeftBarcode extends BaseBarcode{
 
-    // LEFT is bottom
-    // MIDDLE is middle
-    // RIGHT is top
     @Override
     public void init() {
         super.init();
@@ -24,15 +18,6 @@ public class RedRightBarcode extends BaseBarcode{
     @Override
     public void init_loop() {
         super.init_loop();
-        angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        telemetry.addData("Z", angles.firstAngle);
-        telemetry.addData("Y", angles.secondAngle);
-        telemetry.addData("X", angles.thirdAngle);
-    }
-
-    @Override
-    public void start() {
-        super.start();
     }
 
     @Override
@@ -41,6 +26,7 @@ public class RedRightBarcode extends BaseBarcode{
         telemetry.addData("Z", angles.firstAngle);
         telemetry.addData("Y", angles.secondAngle);
         telemetry.addData("X", angles.thirdAngle);
+
         switch (stepCounter) {
             case 0:
                 setTargetPositionOfDrive(-TICKS_PER_INCH * 36,-TICKS_PER_INCH * 36);
@@ -54,7 +40,7 @@ public class RedRightBarcode extends BaseBarcode{
                 }
                 break;
             case 2:
-                setTargetPositionOfDrive(-TICKS_PER_INCH * 27,-TICKS_PER_INCH * 27);
+                setTargetPositionOfDrive(-TICKS_PER_INCH * 29,-TICKS_PER_INCH * 29);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
                 stepCounter++;
@@ -70,8 +56,8 @@ public class RedRightBarcode extends BaseBarcode{
                 stepCounter++;
                 break;
             case 5:
-                if (angles.firstAngle < 60) {
-                    drive(-0.1, 0.1);
+                if (angles.firstAngle > -70) {
+                    drive(0.1, -0.1);
                 } else {
                     drive(0.0, 0.0);
                     stepCounter++;
@@ -80,7 +66,7 @@ public class RedRightBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 3.5),(int)(-TICKS_PER_INCH * 3.5));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 11.0),(int)(-TICKS_PER_INCH * 11.0));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -122,21 +108,113 @@ public class RedRightBarcode extends BaseBarcode{
                 stepCounter++;
                 break;
             case 9:
-                leftSpool.setPower(0.5);
-                rightSpool.setPower(0.5);
-                if (timer.seconds() > 4) {
+                leftSpool.setPower(1.0);
+                rightSpool.setPower(1.0);
+                if (timer.seconds() > 2) {
                     timer.reset();
                     stepCounter++;
                 }
                 break;
             case 10:
                 setScoopPosition(ScoopPosition.DROP2);
+                if (timer.seconds() > 1.5) {
+                    timer.reset();
+                    stepCounter++;
+                }
+                break;
+            case 11:
+                setScoopPosition(ScoopPosition.UP);
+                stepCounter++;
+
+                break;
+            case 12:
+                setTargetPositionOfDrive(TICKS_PER_INCH * 4,TICKS_PER_INCH * 4);
+                setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                timer.reset();
+                stepCounter++;
+                break;
+            case 13:
+                drive(0.2, 0.2);
+                if (timer.seconds() > 1.0) {
+                    stepCounter++;
+                }
+                break;
+            case 14:
+                leftSpool.setTargetPosition(1000);
+                rightSpool.setTargetPosition(1000);
+                setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
+                stepCounter += 1;
+                break;
+            case 15:
+                if (angles.firstAngle < 135) {
+                    leftSpool.setPower(0.5);
+                    rightSpool.setPower(0.5);
+                    drive(-0.1, 0.1);
+                } else {
+                    drive(0.0, 0.0);
+                    stepCounter++;
+                    timer.reset();
+                }
+                break;
+            case 16:
+                setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 31.0),(int)(-TICKS_PER_INCH * 31.0));
+                setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                stepCounter++;
+                break;
+            case 17:
+                drive(0.2, 0.2);
+                if (timer.seconds() > 3.0) {
+                    stepCounter++;
+                    timer.reset();
+                }
+                break;
+            case 18:
+                spinner.setPower(-0.5);
+                if (timer.seconds() > 3.5) {
+                    spinner.setPower(0.0);
+                    stepCounter++;
+                }
+                break;
+            case 19:
+                setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
+                timer.reset();
+                stepCounter++;
+                break;
+            case 20:
+                if (angles.firstAngle < 170) {
+                    drive(-0.05, 0.1);
+                } else {
+                    drive(0.0, 0.0);
+                    stepCounter++;
+                    timer.reset();
+                    setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                }
+                break;
+            case 21:
+                setTargetPositionOfDrive(TICKS_PER_INCH * 16,TICKS_PER_INCH * 16);
+                setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                stepCounter++;
+                timer.reset();
+                break;
+            case 22:
+                drive(0.25, 0.25);
+                if (timer.seconds() > 2) {
+                    stepCounter++;
+                    setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
+                    stepCounter++;
+                }
+                break;
+            case 23:
+                if ((angles.firstAngle > 90 && angles.firstAngle < 180) ||(angles.firstAngle < 80 && angles.firstAngle > -180)) {
+                    drive(0.0, 0.3);
+                } else {
+                  drive(0.0, 0.0);
+                  stepCounter++;
+                }
                 break;
             default:
                 telemetry.addLine("SOMETHING WENT VERY WRONG!!! STUPID PROGRAMMER DID SOMETHING STUPID");
-
         }
-        telemetry.addData("STEP: ", stepCounter);
-
     }
 }

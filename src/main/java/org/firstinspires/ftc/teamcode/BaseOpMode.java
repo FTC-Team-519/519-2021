@@ -6,6 +6,11 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class BaseOpMode extends OpMode {
+
+
+    /***
+     * PASSWORD TO THE ROBOT CONTROLLER IS: epsilondelta2
+     */
     protected DcMotor leftFront;
     protected DcMotor rightFront;
     protected DcMotor leftBack;
