@@ -16,7 +16,7 @@ public class BaseAuto extends BaseOpMode {
     public static final double WHEEL_DIAMETER = 3.78; // 4.72441 WHERE DID THIS NUMBER COME FROM?
     public static final double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * Math.PI;
     public static final int TICKS_PER_INCH = (int)(TICKS_PER_REVOLUTION / WHEEL_CIRCUMFERENCE);
-    public static final double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
+    // public static final double INCHES_PER_TICK = WHEEL_CIRCUMFERENCE / TICKS_PER_REVOLUTION;
     public ElapsedTime timer = new ElapsedTime();
 
     protected int stepCounter = 0;
@@ -65,6 +65,15 @@ public class BaseAuto extends BaseOpMode {
         rightFront.setTargetPosition(right);
         leftBack.setTargetPosition(left);
         rightBack.setTargetPosition(right);
+
+    }
+
+    // THIS ASSUMES THE "FRONT" IS THE LIFT SIDE
+    protected void driveStraightForInches(double inches) {
+        leftFront.setTargetPosition((int)(-TICKS_PER_INCH*inches));
+        rightFront.setTargetPosition((int)(-TICKS_PER_INCH*inches));
+        leftBack.setTargetPosition((int)(-TICKS_PER_INCH*inches));
+        rightBack.setTargetPosition((int)(-TICKS_PER_INCH*inches));
 
     }
 

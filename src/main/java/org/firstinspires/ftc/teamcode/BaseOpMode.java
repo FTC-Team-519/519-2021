@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class BaseOpMode extends OpMode {
@@ -11,6 +12,8 @@ public class BaseOpMode extends OpMode {
     /***
      * PASSWORD TO THE ROBOT CONTROLLER IS: epsilondelta2
      */
+
+    protected DistanceSensor distanceSensor;
     protected DcMotor leftFront;
     protected DcMotor rightFront;
     protected DcMotor leftBack;
@@ -68,6 +71,7 @@ public class BaseOpMode extends OpMode {
         rightBox = hardwareMap.servo.get("rightBox");
         leftGrabby = hardwareMap.servo.get("leftGrabby");
         rightGrabby = hardwareMap.servo.get("rightGrabby");
+        distanceSensor = hardwareMap.get(DistanceSensor.class,"distance");
 
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
