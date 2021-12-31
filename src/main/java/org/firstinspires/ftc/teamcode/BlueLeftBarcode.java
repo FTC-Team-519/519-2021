@@ -64,16 +64,14 @@ public class BlueLeftBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 3.5),(int)(-TICKS_PER_INCH * 3.5));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 5.5),(int)(-TICKS_PER_INCH * 5.5));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
-                /***
-                 * CHANGE THE SPOOL POSITIONS!!!!!!!!!!!!!!!!!!!!!!!!
-                 */
+
                 break;
             case 7:
-                drive(0.2, 0.2);
-                if (timer.seconds() > 1.0) {
+                drive(0.1, 0.1);
+                if (timer.seconds() > 2.0) {
                     leftSpool.setTargetPosition(SPOOL_ENCODER_TOP_POSITION);
                     rightSpool.setTargetPosition(SPOOL_ENCODER_TOP_POSITION);
                     leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -83,19 +81,19 @@ public class BlueLeftBarcode extends BaseBarcode{
                 break;
             case 8:
                 switch (position) {
-                    case LEFT:
+                    case NOTHING:
                         leftSpool.setTargetPosition(SPOOL_ENCODER_BOTTOM_POSITION);
                         rightSpool.setTargetPosition(SPOOL_ENCODER_BOTTOM_POSITION);
                         leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         break;
-                    case RIGHT:
+                    case LEFT:
                         leftSpool.setTargetPosition(SPOOL_ENCODER_MIDDLE_POSITION);
                         rightSpool.setTargetPosition(SPOOL_ENCODER_MIDDLE_POSITION);
                         leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         rightSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                         break;
-                    case NOTHING:
+                    case RIGHT:
                         leftSpool.setTargetPosition(SPOOL_ENCODER_TOP_POSITION);
                         rightSpool.setTargetPosition(SPOOL_ENCODER_TOP_POSITION);
                         leftSpool.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -118,6 +116,12 @@ public class BlueLeftBarcode extends BaseBarcode{
                 break;
             case 10:
                 setScoopPosition(ScoopPosition.DROP2);
+                if (timer.seconds() > 3.0) {
+                    stepCounter++;
+                }
+                break;
+            case 11:
+                setScoopPosition(ScoopPosition.UP);
                 break;
             default:
                 telemetry.addLine("SOMETHING WENT VERY WRONG!!! STUPID PROGRAMMER DID SOMETHING STUPID");

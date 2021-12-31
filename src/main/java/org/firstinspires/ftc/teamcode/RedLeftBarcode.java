@@ -94,7 +94,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 10.5),(int)(-TICKS_PER_INCH * 10.5));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 10.0),(int)(-TICKS_PER_INCH * 10.0));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -187,24 +187,24 @@ public class RedLeftBarcode extends BaseBarcode{
                 }
                 break;
             case 20:
-                driveStraightForInches(14.0);
-                setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+//                driveStraightForInches(15.0);
+                setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
                 stepCounter++;
                 break;
             case 21:
-                drive(0.175, 0.175);
-                if (timer.seconds() > 2.0) {
-                    driveStraightForInches(16);
+                drive(-0.175, -0.175);
+                if (distanceSensor.getDistance(DistanceUnit.INCH) < 12.0) {
+                    //driveStraightForInches(16);
                     stepCounter++;
                     timer.reset();
                 }
                 break;
             case 22:
                 spinner.setPower(-0.5);
-                if (distanceSensor.getDistance(DistanceUnit.INCH) < 10) {
-                    drive(0.025, 0.025);
+                if (distanceSensor.getDistance(DistanceUnit.INCH) < 10.0) {
+                    drive(-0.025, -0.025);
                 } else {
-                    drive(0.1, 0.1);
+                    drive(-0.1, -0.1);
                 }
                 if (timer.seconds() > 2.5) {
                     //spinner.setPower(0.0);
@@ -260,5 +260,6 @@ public class RedLeftBarcode extends BaseBarcode{
             default:
                 telemetry.addLine("SOMETHING WENT VERY WRONG!!! STUPID PROGRAMMER DID SOMETHING STUPID");
         }
+        telemetry.addData("Distance: ", distanceSensor.getDistance(DistanceUnit.INCH));
     }
 }
