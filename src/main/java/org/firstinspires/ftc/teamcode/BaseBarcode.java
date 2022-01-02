@@ -52,13 +52,14 @@ public class BaseBarcode extends BaseAuto {
     @Override
     public void init_loop() {
         super.init_loop();
-
+        // will return null if the last call has the same recognitions as this one
+        // this is the reason that the console flickers the telemetry updates sometimes
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
         if (updatedRecognitions != null) {
             telemetry.addData("# Object Detected", updatedRecognitions.size());
             int i = 0;
             int counter = 0;
-            double center = 0;
+
             for (Recognition recognition : updatedRecognitions) {
                 telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
 
@@ -67,7 +68,7 @@ public class BaseBarcode extends BaseAuto {
                 telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
                         recognition.getRight(), recognition.getBottom()); */
 
-                center = ((recognition.getLeft() + recognition.getRight()) / 2);
+                double center = ((recognition.getLeft() + recognition.getRight()) / 2);
 
                 if (recognition.getLabel().equals("Duck") || recognition.getLabel().equals("Cube")) {
 
@@ -83,12 +84,16 @@ public class BaseBarcode extends BaseAuto {
 
                 }
             }
+
+            if (updatedRecognitions.size() == 0) {
+                position = Position.NOTHING;
+            }
         }// else {
 //            telemetry.addLine("Position: 3");
 //            positionIs3 = true;
 //            position = Position.NOTHING;
 //        }
-        telemetry.addData("Postion: ", position.toString());
+        telemetry.addData("Position: ", position.toString());
         telemetry.addData("Distance Sensor: ", distanceSensor.getDistance(DistanceUnit.INCH));
     }
 
