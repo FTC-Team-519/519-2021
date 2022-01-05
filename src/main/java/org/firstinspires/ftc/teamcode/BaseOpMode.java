@@ -47,7 +47,7 @@ public class BaseOpMode extends OpMode {
 
     protected final int SPOOL_ENCODER_BOTTOM_POSITION = 1850;
 
-    protected final int SPOOL_ENCODER_TOP_POSITION = 4200;
+    protected final int SPOOL_ENCODER_TOP_POSITION = 4400;
     protected final int SPOOL_ENCODER_MIDDLE_POSITION = 3100;
     // 1100 maybe
     // 3400 for second height, at DROP (not DROP 2)

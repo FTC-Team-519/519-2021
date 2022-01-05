@@ -94,7 +94,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 10.0),(int)(-TICKS_PER_INCH * 10.0));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.5),(int)(-TICKS_PER_INCH * 9.5));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -192,7 +192,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 stepCounter++;
                 break;
             case 21:
-                drive(-0.175, -0.175);
+                drive(-0.1, -0.1);
                 if (distanceSensor.getDistance(DistanceUnit.INCH) < 12.0) {
                     //driveStraightForInches(16);
                     stepCounter++;
@@ -200,24 +200,33 @@ public class RedLeftBarcode extends BaseBarcode{
                 }
                 break;
             case 22:
-                spinner.setPower(-0.5);
+
                 if (distanceSensor.getDistance(DistanceUnit.INCH) < 10.0) {
-                    drive(-0.025, -0.025);
+                    drive(-0.01, -0.01);
                 } else {
-                    drive(-0.1, -0.1);
+                    drive(-0.05, -0.05);
                 }
-                if (timer.seconds() > 2.5) {
+                if (timer.seconds() > 0.5) {
                     //spinner.setPower(0.0);
+
                     stepCounter++;
                 }
                 break;
             case 23:
+                spinner.setPower(-0.45);
+                drive(-0.01, -0.01);
+
+                if (timer.seconds() > 4.0) {
+                    stepCounter++;
+                }
+                break;
+            case 24:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
                 driveStraightForInches(-18);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
-            case 24:
+            case 25:
                 drive(0.2, 0.2);
                 break;
 //            case 21:
