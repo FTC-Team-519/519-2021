@@ -77,8 +77,8 @@ public class BaseOpMode extends OpMode {
         leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
         rightFront.setDirection(DcMotorSimple.Direction.FORWARD);
         rightBack.setDirection(DcMotorSimple.Direction.FORWARD);
-        leftSpool.setDirection(DcMotorSimple.Direction.FORWARD);
-        rightSpool.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSpool.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightSpool.setDirection(DcMotorSimple.Direction.FORWARD);
         spinner.setDirection(DcMotorSimple.Direction.FORWARD);
         intake.setDirection(DcMotorSimple.Direction.FORWARD);
 
