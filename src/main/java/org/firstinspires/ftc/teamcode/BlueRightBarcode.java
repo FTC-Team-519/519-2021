@@ -28,7 +28,7 @@ public class BlueRightBarcode extends BaseBarcode{
         telemetry.addData("X", angles.thirdAngle);
         switch (stepCounter) {
             case 0:
-                setTargetPositionOfDrive(-TICKS_PER_INCH * 36,-TICKS_PER_INCH * 36);
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 35.7),(int)(-TICKS_PER_INCH * 35.7));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 switch (position) {
                     case NOTHING:
@@ -60,6 +60,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 leftSpool.setPower(1.0);
                 rightSpool.setPower(1.0);
                 if (timer.seconds() > 4.0) {
+                    drive(0.0, 0.0);
                     stepCounter++;
                 }
                 break;
@@ -92,7 +93,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 10),(int)(-TICKS_PER_INCH * 10));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.5),(int)(-TICKS_PER_INCH * 9.5));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -118,6 +119,7 @@ public class BlueRightBarcode extends BaseBarcode{
             case 10:
                 setScoopPosition(ScoopPosition.DROP2);
                 if (timer.seconds() > 1.5) {
+                    drive(0.0, 0.0);
                     timer.reset();
                     stepCounter++;
                 }
@@ -146,7 +148,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 stepCounter += 1;
                 break;
             case 15:
-                if (angles.firstAngle > -130) {
+                if (angles.firstAngle > -127.5) {
                     leftSpool.setPower(0.5);
                     rightSpool.setPower(0.5);
                     drive(0.08, -0.08);
@@ -158,7 +160,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 16:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                driveStraightForInches(26.0);
+                driveStraightForInches(29.5);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -175,12 +177,13 @@ public class BlueRightBarcode extends BaseBarcode{
                 drive(-0.02, -0.02);
 
                 if (timer.seconds() > 4.0) {
+                    drive(0.0, 0.0);
                     stepCounter++;
                 }
                 break;
             case 19:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                driveStraightForInches(-24);
+                driveStraightForInches(-26);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 timer.reset();
@@ -188,12 +191,13 @@ public class BlueRightBarcode extends BaseBarcode{
             case 20:
                 drive(0.2, 0.2);
                 if (timer.seconds() > 3.0) {
+                    drive(0.0, 0.0);
                     setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
                     stepCounter++;
                 }
                 break;
             case 21:
-                if (angles.firstAngle < -90) {
+                if (angles.firstAngle < -87) {
                     drive(-0.2, 0.2);
                 } else {
                     drive(0.0, 0.0);
@@ -202,7 +206,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 22:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                driveStraightForInches(19);
+                driveStraightForInches(24);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 timer.reset();
