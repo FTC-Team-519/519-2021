@@ -28,6 +28,11 @@ public class BaseAuto extends BaseOpMode {
         rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        leftSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightSpool.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);

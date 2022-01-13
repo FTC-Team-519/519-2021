@@ -56,11 +56,15 @@ public class MainTeleop extends BaseTeleOp {
         }
 
         if (gunner.right_bumper) {
-            rightSpool.setPower(0.5);
-            leftSpool.setPower(0.5);
+            if (rightSpool.getCurrentPosition() < 4500) {
+                rightSpool.setPower(0.5);
+                leftSpool.setPower(0.5);
+            }
         } else if (gunner.left_bumper) {
-            rightSpool.setPower(-0.5);
-            leftSpool.setPower(-0.5);
+            if (rightSpool.getCurrentPosition() > 0) {
+                rightSpool.setPower(-0.5);
+                leftSpool.setPower(-0.5);
+            }
         } else {
             rightSpool.setPower(0.0);
             leftSpool.setPower(0.0);
@@ -77,7 +81,7 @@ public class MainTeleop extends BaseTeleOp {
         if (gunner.x) {
             setScoopPosition(ScoopPosition.UP);
         } else if (gunner.y) {
-            setScoopPosition(ScoopPosition.DROP);
+            setScoopPosition(ScoopPosition.DROP2);
         } else if (gunner.a && !gunner.start) {
             setScoopPosition(ScoopPosition.FORWARD);
         } else if (gunner.b && !gunner.start) {
