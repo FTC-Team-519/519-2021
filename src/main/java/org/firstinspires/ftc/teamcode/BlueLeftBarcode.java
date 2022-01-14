@@ -122,6 +122,30 @@ public class BlueLeftBarcode extends BaseBarcode{
                 break;
             case 11:
                 setScoopPosition(ScoopPosition.UP);
+                leftSpool.setTargetPosition(1000);
+                rightSpool.setTargetPosition(1000);
+                timer.reset();
+                stepCounter++;
+                break;
+            case 12:
+
+                leftSpool.setPower(-1.0);
+                rightSpool.setPower(-1.0);
+                if(timer.seconds()>2) {
+                    leftSpool.setPower(0.0);
+                    rightSpool.setPower(0.0);
+                    setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    driveStraightForInches(-78);
+                    setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                    timer.reset();
+                    stepCounter++;
+                }
+                break;
+            case 13:
+                drive(0.7,0.7);
+                if(timer.seconds()>5){
+                    drive(0.0,0.0);
+                }
                 break;
             default:
                 telemetry.addLine("SOMETHING WENT VERY WRONG!!! STUPID PROGRAMMER DID SOMETHING STUPID");
