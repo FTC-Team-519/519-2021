@@ -71,9 +71,9 @@ public class MainTeleop extends BaseTeleOp {
         }
 
         if (gunner.dpad_up) {
-            spinner.setPower(0.7);
+            spinner.setPower(0.5);
         } else if (gunner.dpad_down) {
-            spinner.setPower(-0.7);
+            spinner.setPower(-0.5);
         } else {
             spinner.setPower(0.0);
         }

@@ -43,7 +43,7 @@ public class RedRightBarcode extends BaseBarcode{
         telemetry.addData("X", angles.thirdAngle);
         switch (stepCounter) {
             case 0:
-                setTargetPositionOfDrive(-TICKS_PER_INCH * 36,-TICKS_PER_INCH * 36);
+                setTargetPositionOfDrive(-TICKS_PER_INCH * 36, -TICKS_PER_INCH * 36);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -54,7 +54,7 @@ public class RedRightBarcode extends BaseBarcode{
                 }
                 break;
             case 2:
-                setTargetPositionOfDrive(-TICKS_PER_INCH * 27,-TICKS_PER_INCH * 27);
+                setTargetPositionOfDrive(-TICKS_PER_INCH * 27, -TICKS_PER_INCH * 27);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
                 stepCounter++;
@@ -70,17 +70,27 @@ public class RedRightBarcode extends BaseBarcode{
                 stepCounter++;
                 break;
             case 5:
-                if (angles.firstAngle < 60) {
-                    drive(-0.1, 0.1);
+                if (getPosition() == Position.NOTHING) {
+                    if (angles.firstAngle < 50) {
+                        drive(-0.1, 0.1);
+                    } else {
+                        drive(0.0, 0.0);
+                        stepCounter++;
+                        timer.reset();
+                    }
                 } else {
-                    drive(0.0, 0.0);
-                    stepCounter++;
-                    timer.reset();
+                    if (angles.firstAngle < 60) {
+                        drive(-0.1, 0.1);
+                    } else {
+                        drive(0.0, 0.0);
+                        stepCounter++;
+                        timer.reset();
+                    }
                 }
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 3.5),(int)(-TICKS_PER_INCH * 3.5));
+                setTargetPositionOfDrive((int) (-TICKS_PER_INCH * 4.0), (int) (-TICKS_PER_INCH * 4.0));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -131,6 +141,64 @@ public class RedRightBarcode extends BaseBarcode{
                 break;
             case 10:
                 setScoopPosition(ScoopPosition.DROP2);
+                if (timer.seconds() > 2) {
+                    timer.reset();
+                    stepCounter++;
+                }
+                break;
+
+            case 11:
+                setScoopPosition(ScoopPosition.UP);
+                leftSpool.setTargetPosition(1000);
+                rightSpool.setTargetPosition(1000);
+                timer.reset();
+                stepCounter++;
+                break;
+            case 12:
+
+                leftSpool.setPower(-1.0);
+                rightSpool.setPower(-1.0);
+                if (timer.seconds() > 2) {
+                    leftSpool.setPower(0.0);
+                    rightSpool.setPower(0.0);
+                    setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                    driveStraightForInches(-7);
+                    setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                    timer.reset();
+                    stepCounter++;
+                }
+                break;
+            case 13:
+                drive(0.4, 0.4);
+                if (timer.seconds() > 2) {
+                    drive(0.0, 0.0);
+                    stepCounter++;
+                }
+                break;
+            case 14:
+                setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
+                stepCounter++;
+                break;
+            case 15:
+                if (angles.firstAngle < 80) {
+                    drive(0.0, 0.1);
+                } else {
+                    drive(0.0, 0.0);
+                    timer.reset();
+                    stepCounter++;
+                }
+                break;
+            case 16:
+                setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                driveStraightForInches(-60);
+                setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
+                stepCounter++;
+                break;
+            case 17:
+                drive(0.8, 0.8);
+                if (timer.seconds() > 5) {
+                    drive(0.0,0.0);
+                }
                 break;
             default:
                 telemetry.addLine("SOMETHING WENT VERY WRONG!!! STUPID PROGRAMMER DID SOMETHING STUPID");

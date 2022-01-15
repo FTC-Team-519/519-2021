@@ -116,7 +116,7 @@ public class BlueLeftBarcode extends BaseBarcode{
                 break;
             case 10:
                 setScoopPosition(ScoopPosition.DROP2);
-                if (timer.seconds() > 3.0) {
+                if (timer.seconds() > 2.0) {
                     stepCounter++;
                 }
                 break;
