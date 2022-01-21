@@ -59,8 +59,8 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 1:
                 drive(0.2, 0.2);
-                leftSpool.setPower(1.0);
-                rightSpool.setPower(1.0);
+                leftSpool.setPower(0.8);
+                rightSpool.setPower(0.8);
                 if (timer.seconds() > 4.0) {
                     stepCounter++;
                 }
@@ -73,8 +73,8 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 3:
                 drive(0.2, 0.2);
-                leftSpool.setPower(1.0);
-                rightSpool.setPower(1.0);
+                leftSpool.setPower(0.8);
+                rightSpool.setPower(0.8);
                 if (timer.seconds() > 2.0) {
                     stepCounter++;
                 }
@@ -94,7 +94,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.5),(int)(-TICKS_PER_INCH * 9.5));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.0),(int)(-TICKS_PER_INCH * 9.0));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -229,7 +229,7 @@ public class RedLeftBarcode extends BaseBarcode{
             case 25:
                 drive(0.2, 0.2);
                 break;
-//            case 21:
+//            case 21:hb
 //                setModeOfDrive(DcMotor.RunMode.RUN_USING_ENCODER);
 //                timer.reset();
 //                stepCounter++;

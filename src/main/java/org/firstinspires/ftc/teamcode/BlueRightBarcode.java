@@ -57,8 +57,8 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 1:
                 drive(0.2, 0.2);
-                leftSpool.setPower(1.0);
-                rightSpool.setPower(1.0);
+                leftSpool.setPower(0.8);
+                rightSpool.setPower(0.8);
                 if (timer.seconds() > 4.0) {
                     drive(0.0, 0.0);
                     stepCounter++;
@@ -72,8 +72,8 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 3:
                 drive(0.2, 0.2);
-                leftSpool.setPower(1.0);
-                rightSpool.setPower(1.0);
+                leftSpool.setPower(0.8);
+                rightSpool.setPower(0.8);
                 if (timer.seconds() > 2.0) {
                     stepCounter++;
                 }
