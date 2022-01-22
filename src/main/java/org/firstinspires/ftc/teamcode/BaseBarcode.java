@@ -52,6 +52,8 @@ public class BaseBarcode extends BaseAuto {
     @Override
     public void init_loop() {
         super.init_loop();
+        telemetry.addData("Distance: ", distanceSensor.getDistance(DistanceUnit.INCH));
+
         // will return null if the last call has the same recognitions as this one
         // this is the reason that the console flickers the telemetry updates sometimes
         List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();

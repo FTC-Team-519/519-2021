@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.Range;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp(name = "cheep cheep beach", group = "Main")
 public class MainTeleop extends BaseTeleOp {
@@ -90,6 +91,6 @@ public class MainTeleop extends BaseTeleOp {
 
         telemetry.addData("Spool Left: ", leftSpool.getCurrentPosition());
         telemetry.addData("Spool Right: ", rightSpool.getCurrentPosition());
-
+        telemetry.addData("Distance: ", distanceSensor.getDistance(DistanceUnit.INCH));
     }
 }

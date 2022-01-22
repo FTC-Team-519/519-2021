@@ -94,7 +94,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.0),(int)(-TICKS_PER_INCH * 9.0));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.6),(int)(-TICKS_PER_INCH * 9.6));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
@@ -201,7 +201,7 @@ public class RedLeftBarcode extends BaseBarcode{
                 break;
             case 22:
 
-                if (distanceSensor.getDistance(DistanceUnit.INCH) < 10.0) {
+                if (distanceSensor.getDistance(DistanceUnit.INCH) < 11.5) {
                     drive(-0.01, -0.01);
                 } else {
                     drive(-0.05, -0.05);

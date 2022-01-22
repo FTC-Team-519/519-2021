@@ -65,7 +65,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 }
                 break;
             case 2:
-                setTargetPositionOfDrive(-TICKS_PER_INCH * 26,-TICKS_PER_INCH * 26);
+                setTargetPositionOfDrive(-TICKS_PER_INCH * 27,-TICKS_PER_INCH * 27);
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 timer.reset();
                 stepCounter++;
@@ -93,7 +93,7 @@ public class BlueRightBarcode extends BaseBarcode{
                 break;
             case 6:
                 setModeOfDrive(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.5),(int)(-TICKS_PER_INCH * 9.5));
+                setTargetPositionOfDrive((int)(-TICKS_PER_INCH * 9.7),(int)(-TICKS_PER_INCH * 9.7));
                 setModeOfDrive(DcMotor.RunMode.RUN_TO_POSITION);
                 stepCounter++;
                 break;
